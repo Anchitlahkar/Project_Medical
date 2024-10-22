@@ -1,4 +1,3 @@
-import os
 import msvcrt, os, time
 
 def read_txt_config():
