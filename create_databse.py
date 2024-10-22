@@ -196,5 +196,7 @@ def main():
         create_support_tickets_table(connection)
         connection.close()
 
+    input("\n\nExit...")
+
 if __name__ == "__main__":
     main()

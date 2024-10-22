@@ -24,6 +24,19 @@ def main():
             elif key == b'P':  # Down arrow
                 if current_option < len(options) - 1:
                     current_option += 1
+
+            elif key == b'M':  # Condition for create db (Home Key)
+                print("Rest")
+                if input(": ") == "db":
+                    os.system("cls")
+                    d = input("Create Database? (y/n): ")
+                    if d == "y":
+                        from create_databse import main
+                        main()
+                        print("DB Created")
+                        os.system("cls")
+
+
         elif key == b'\r':  # Enter key
             print(f"\nYou selected: {options[current_option]}")
             
@@ -38,6 +51,6 @@ def main():
                 os.system("cls")
                 break
 
+
 if __name__ == '__main__':
-    input()
     main()
