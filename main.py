@@ -1,9 +1,17 @@
 import msvcrt, os
-from commands import print_bordered, display_menu, userchoise
+from commands import print_bordered, display_menu, userchoise, check_config_file, check_database_exists
 
 def main():
     options = ['Patient', 'Doctor', 'Exit']
     current_option = 0
+    db_update = ""
+
+    if not check_database_exists():
+        db_update = "Database does not exist 'Use Create_databse.py' file to create database"
+    else:
+        db_update= ""
+
+    os.system("cls")
 
     while True:
         print_bordered("Welcome to Healthcare Center")
@@ -11,6 +19,8 @@ def main():
 
         print("\nSelect an option:")
         display_menu(options, current_option)
+
+        print("\n\n"+db_update)
 
         # Wait for a key press
         key = msvcrt.getch()
@@ -53,4 +63,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if check_config_file():
+        main()
+    else:
+        print("Error: Config file not Found")
+        input("Exit...")

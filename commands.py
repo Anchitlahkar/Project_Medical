@@ -1,7 +1,6 @@
 import msvcrt, os, time
 
 def read_txt_config():
-    """Read host, user, and password from a TXT file."""
     config = {}
     try:
         with open("config.txt", 'r') as file:
@@ -102,3 +101,57 @@ def userchoise(id):
                 break
 
 
+def check_config_file(config_file="config.txt"):
+    if os.path.exists(config_file):
+        print(f"'{config_file}' found.")
+        return True
+    else:
+        print(f"Error: '{config_file}' not found.")
+        return False
+    
+def check_database_exists():
+    import mysql.connector
+    from mysql.connector import Error
+
+    if not check_config_file():
+        return False
+
+    # Read database details from config.txt
+    host, user, password, database = read_config()
+
+    try:
+        # Connect to MySQL server
+        connection = mysql.connector.connect(host=host, user=user, passwd=password)
+        if connection.is_connected():
+            print("Successfully connected to MySQL server.")
+
+            # Check if the specified database exists
+            cursor = connection.cursor()
+            cursor.execute(f"SHOW DATABASES LIKE '{database}';")
+            result = cursor.fetchone()
+
+            if result:
+                print(f"Database '{database}' exists.")
+                return True
+            else:
+                print(f"Database '{database}' does not exist.")
+                return False
+
+    except Error as err:
+        print(f"Error: {err}")
+        return False
+
+    finally:
+        if connection.is_connected():
+            cursor.close()
+            connection.close()
+
+# Function to read the config file
+def read_config(config_file="config.txt"):
+    with open(config_file, 'r') as file:
+        lines = file.readlines()
+        host = lines[0].strip().split('=')[1]
+        user = lines[1].strip().split('=')[1]
+        password = lines[2].strip().split('=')[1]
+        database = lines[3].strip().split('=')[1]
+    return host, user, password, database

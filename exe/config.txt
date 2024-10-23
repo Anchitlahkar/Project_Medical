@@ -1,4 +1,4 @@
 host=localhost
 user=root
 password=anchitMysql556711
-database=Project_medical
+database=project_medical

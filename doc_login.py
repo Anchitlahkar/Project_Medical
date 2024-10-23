@@ -236,14 +236,14 @@ def check_appointments(doctor_id):
         return
 
     query = """
-    SELECT A.AppointmentID, P.FirstName, P.LastName, P.ContactNumber, A.AppointmentDate, A.Status
+    SELECT A.AppointmentID, P.FirstName, P.LastName, P.ContactNumber, A.AppointmentDate, A.Status, P.MedicalHistory
     FROM Appointments A
     JOIN patient_rec P ON A.PatientID = P.PatientID
     WHERE A.DoctorID = %s;
     """
 
     appointment_rows = []
-    headers = ["Appointment ID", "Patient", "Contact Number", "Appointment Date", "Status"]
+    headers = ["Appointment ID", "Patient", "Contact Number", "Appointment Date", "Status", "Medical History"]
 
     try:
         cursor = connection.cursor()
@@ -253,7 +253,7 @@ def check_appointments(doctor_id):
         if appointments:
             print("\nScheduled Appointments:\n")
             for appointment in appointments:
-                appointment_rows.append([appointment[0], f"{appointment[1]} {appointment[2]}", appointment[3], appointment[4], appointment[5]])
+                appointment_rows.append([appointment[0], f"{appointment[1]} {appointment[2]}", appointment[3], appointment[4], appointment[5], appointment[6]])
         else:
             print("No scheduled appointments.")
 

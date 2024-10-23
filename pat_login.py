@@ -1,6 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
-from commands import title_page, print_bordered, display_menu,read_txt_config
+from commands import title_page, print_bordered, display_menu, read_txt_config
 import msvcrt, os, time
 from prettytable import PrettyTable
 
@@ -8,6 +8,7 @@ from prettytable import PrettyTable
 connection = None
 cursor = None
 check = ""
+
 
 def connect_server_connection():
     global connection, cursor
